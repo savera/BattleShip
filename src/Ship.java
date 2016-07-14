@@ -1,8 +1,6 @@
 
 public abstract class Ship extends Tile {
 
-	
-
 	boolean horizontal;
 
 	public int getStartCol() {
@@ -52,8 +50,8 @@ public abstract class Ship extends Tile {
 		horizontal = h;
 
 	}
-	
-	public abstract void shipType(); 
+
+	public abstract void shipType();
 
 	public boolean isSunck() {
 
@@ -94,6 +92,7 @@ public abstract class Ship extends Tile {
 
 				}
 			}
+			
 		} else if (!horizontal) {
 
 			if (startCol == c) {
@@ -111,6 +110,71 @@ public abstract class Ship extends Tile {
 				}
 			}
 		}
+		
 		return false;
+	}
+
+	public boolean okToPlaceShipAtLoc(int i, int j, boolean isHorizontal, Board board) {
+
+		if (isHorizontal) {
+
+			for (int k = 0; k < length; k++) {
+
+				i++;
+
+				if (board.isOccupied(i, j)) {
+
+					return false;
+
+				}
+			}
+
+		} else {
+
+			for (int k = 0; k < length; k++) {
+
+				j++;
+
+				if (board.isOccupied(i, j)) {
+
+					return false;
+
+				}
+			}
+		}
+
+		return true;
+
+	}
+
+	public void placeShipAtLoc(int i, int j, boolean isHorizontal, Board board) {
+
+		if (isHorizontal) {
+
+			for (int k = 0; k < length; k++) {
+
+				i++;
+
+				board.tiles[i][j] = this;
+
+			}
+
+		} else {
+
+			for (int k = 0; k < length; k++) {
+
+				j++;
+
+				board.tiles[i][j] = this;
+
+			}
+		}
+		
+		setStartRow(i); 
+		
+		setStartCol(j); 
+		
+		setHorizantal(isHorizontal); 
+		
 	}
 }
