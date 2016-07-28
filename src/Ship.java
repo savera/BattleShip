@@ -29,13 +29,13 @@ public abstract class Ship extends Tile {
 
 	public int getLength() {
 
-		return startCol;
+		return length;
 
 	}
 
 	public void setLength(int shipLength) {
 
-		startCol = shipLength;
+		length = shipLength;
 
 	}
 
@@ -52,6 +52,13 @@ public abstract class Ship extends Tile {
 	}
 
 	public abstract void shipType();
+
+	@Override
+	public String toString() {
+
+		return "s";
+
+	}
 
 	public boolean isSunck() {
 
@@ -92,7 +99,7 @@ public abstract class Ship extends Tile {
 
 				}
 			}
-			
+
 		} else if (!horizontal) {
 
 			if (startCol == c) {
@@ -110,7 +117,7 @@ public abstract class Ship extends Tile {
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -120,9 +127,17 @@ public abstract class Ship extends Tile {
 
 			for (int k = 0; k < length; k++) {
 
-				i++;
+				try {
 
-				if (board.isOccupied(i, j)) {
+					i++;
+
+					if (board.isOccupied(i, j)) {
+
+						return false;
+
+					}
+
+				} catch (ArrayIndexOutOfBoundsException e) {
 
 					return false;
 
@@ -133,9 +148,16 @@ public abstract class Ship extends Tile {
 
 			for (int k = 0; k < length; k++) {
 
-				j++;
+				try {
 
-				if (board.isOccupied(i, j)) {
+					j++;
+
+					if (board.isOccupied(i, j)) {
+
+						return false;
+
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {
 
 					return false;
 
@@ -169,12 +191,12 @@ public abstract class Ship extends Tile {
 
 			}
 		}
-		
-		setStartRow(i); 
-		
-		setStartCol(j); 
-		
-		setHorizantal(isHorizontal); 
-		
+
+		setStartRow(i);
+
+		setStartCol(j);
+
+		setHorizantal(isHorizontal);
+
 	}
 }

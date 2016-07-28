@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
 
@@ -30,7 +32,15 @@ public class Board {
 
 			for (int j = 0; j < tiles.length; j++) {
 
-				System.out.print(tiles[i][j].toString() + " ");
+				if (tileIsHit[i][j] == true) {
+
+					System.out.print(tiles[i][j].toString());
+					
+				} else {
+
+					System.out.print(". ");
+
+				}
 			}
 
 			System.out.print("\n");
@@ -97,18 +107,60 @@ public class Board {
 		return shipsSunk;
 
 	}
-	
-	public boolean isGameOver(){
-		
-		if(getShipsSunk() == 10){
-			
-			return true; 
-			
-		}else{
-			
-			return false; 
+
+	public boolean isGameOver() {
+
+		if (getShipsSunk() == 10) {
+
+			return true;
+
+		} else {
+
+			return false;
 		}
-		
+
+	}
+
+	public void placeShipsRandomly() {
+
+		ArrayList<Ship> ships = new ArrayList<Ship>();
+
+		ships.add(new BattleShipShip());
+
+		ships.add(new Cruiser());
+		ships.add(new Cruiser());
+
+		ships.add(new Destroyer());
+		ships.add(new Destroyer());
+		ships.add(new Destroyer());
+
+		ships.add(new Submarine());
+		ships.add(new Submarine());
+		ships.add(new Submarine());
+		ships.add(new Submarine());
+
+		Random random = new Random();
+
+		for (int i = 0; i < ships.size(); i++) {
+
+			int row = random.nextInt(10);
+
+			int col = random.nextInt(10);
+
+			boolean isHorizontal = random.nextBoolean();
+
+			if (ships.get(i).okToPlaceShipAtLoc(row, col, isHorizontal, this)) {
+
+				ships.get(i).placeShipAtLoc(row, col, isHorizontal, this);
+
+			} else {
+
+				i--;
+
+			}
+
+		}
+
 	}
 
 }
